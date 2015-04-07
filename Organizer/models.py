@@ -87,7 +87,7 @@ class Task(models.Model):
     notes = models.TextField('Notes', default='', blank=True)
     project = models.ForeignKey(Project)
     severity = models.ForeignKey('TaskSeverity')
-    due = models.DateTimeField('Due Date', blank=True, null=True, default=None)
+    due = models.DateField('Due Date', blank=True, null=True, default=None)
     user = models.ForeignKey(User)
     active = models.BooleanField('Active', default=True)
 
