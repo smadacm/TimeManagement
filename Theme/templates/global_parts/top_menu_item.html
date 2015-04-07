@@ -1,0 +1,14 @@
+{% load menu_tags top_menu_item_classes %}
+
+{% for child in children %}
+    {% if not child.is_first %}
+        <li class="{{ child|menu_item_li_classes }}">
+                <a href="{{ child.attr.redirect_url|default:child.get_absolute_url }}" class="{{ child|menu_item_a_classes }}">{{ child.get_menu_title }}</a>
+                {% if child.children %}
+                <ul>
+                        {% show_menu from_level to_level extra_inactive extra_active template "" "" child %}
+                </ul>
+                {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,79 @@
+{% extends "layouts/content.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block js %}<script src="{% static "organizer/js/dashboard.js" %}"></script>{% endblock %}
+{% block css %}<link rel="stylesheet" type="text/css" href="{% static "organizer/js/dashboard.js" %}" />{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+    <div id="async-new-task-placeholder" class="row col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix" onclick="taskBuilder.hideForm()">
+                <h3 class="panel-title pull-left">Add New Task</h3>
+                <div class="btn-group pull-right">
+                </div>
+            </div>
+            <div class="panel-body">
+                <form id="async-new-task-form" onsubmit="return taskBuilder.submitTask()">
+                    <div class="form-group">
+                        <label for="task-add-form-client">Client</label>
+                        <select name="client" id="task-add-form-client" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-add-form-project">Project</label>
+                        <select name="project" id="task-add-form-project" class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-add-form-title">Title</label>
+                        <input type="text" name="title" id="task-add-form-title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="task-add-form-due">Due Date</label>
+                        <input type="date" name="due" id="task-add-form-due" class="form-control" />
+                    </div>
+                    <input type="submit" value="Create Task" class="btn btn-primary" id="task-add-form-submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row col-sm-12 panel">
+        <a class="btn btn-primary" onclick="taskBuilder.showForm()">Create Task</a>
+    </div>
+    {% for client in clients %}
+        <div class="row col-sm-12">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ client.name }}</h3>
+                </div>
+            </div>
+        </div>
+        {% for project in client.filtered_projects %}
+            <div class="row col-sm-4">
+                <div class="panel panel-secondary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">{{ project.name }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        {% for task in project.filtered_tasks %}
+                            <div class="row">
+                                <div class="col-sm-10 {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+                                    <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+                                </div>
+                                <div class="col-sm-1">
+                                    <a href="{% url "tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <a href="{% url "tasks.create" %}">Create New Task...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

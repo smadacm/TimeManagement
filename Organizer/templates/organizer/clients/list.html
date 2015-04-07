@@ -1,0 +1,13 @@
+{% extends "layouts/content.html" %}
+{% load static %}
+{% block content %}
+    <ul>
+        {% for client in clients %}
+            <li>
+                <a href="{% url "clients.edit" pk=client.pk %}">{{ client.name }}</a>
+                <a href="{% url "clients.delete" pk=client.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
+            </li>
+        {% endfor %}
+        <li><a href="{% url "clients.create" %}">Create New Client...</a></li>
+    </ul>
+{% endblock %}

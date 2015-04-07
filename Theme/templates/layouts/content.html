@@ -1,0 +1,9 @@
+{% extends "layouts/master.html" %}
+{% block layout %}
+    <div class="container theme-showcase" role="main">
+        {% block content %}{% endblock %}
+    </div> <!-- /container -->
+    <div class="container theme-showcase" role="main">
+        {% include "global_parts/footer.html" %}
+    </div> <!-- /container -->
+{% endblock %}

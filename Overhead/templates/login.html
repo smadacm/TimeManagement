@@ -1,0 +1,27 @@
+{% extends "layouts/content.html" %}
+
+{% block content %}
+    {% if info %}
+        <fieldset class="info">
+            <legend>Message</legend>
+            {{ info }}
+        </fieldset>
+    {% endif %}
+    {% if error %}
+        <fieldset class="error">
+            <legend>Error</legend>
+            {{ error }}
+        </fieldset>
+    {% endif %}
+    <form action="{% url "overhead.login_action" %}" method="post">
+        {% csrf_token %}
+        {% if redirect %}
+            <input type="hidden" name="redirect" value="{{ redirect }}" />
+        {% endif %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" />
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" />
+        <input type="submit" value="Log In" />
+    </form>
+{% endblock %}

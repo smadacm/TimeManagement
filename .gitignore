@@ -1,0 +1,6 @@
+venv/
+static/
+init_data.d/
+.idea/
+*.pyc
+*.db3
