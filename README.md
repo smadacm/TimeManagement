@@ -21,6 +21,7 @@ To install on Linux:
     $ cd TimeManagement
     $ virtualenv venv
     $ source venv/bin/activate
+    $ pip install -r requirements.txt
     $ ./reset.sh
     $ python manage.py runserver
     
