@@ -1,4 +1,5 @@
 venv/
+migrations/
 /static/
 init_data.d/
 .idea/

@@ -75,3 +75,8 @@ task.project = internal_project
 task.severity = low_severity
 task.user = user
 task.save()
+
+dashboard = organizer_models.Dashboard(user_id=None)
+dashboard.save()
+organizer_models.DashboardPanel(dashboard=dashboard, type='CreateTaskPanel', sort_order=10).save()
+organizer_models.DashboardPanel(dashboard=dashboard, type='AllTasksPanel', sort_order=20).save()

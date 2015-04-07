@@ -14,14 +14,11 @@ class Dashboard(util.ForcedAuthenticationMixin, generic_views.TemplateView):
         # request should not be None, TemplateViewSimple ensures this
         context = super(Dashboard, self).get_context_data(**kwargs)
 
-        # clients = organizer_models.Client.objects.filter(Q(user=self.request.user) | Q(limited=False))
         clients = organizer_models.Client.get_by_request(self.request)
-        # projects = organizer_models.Project.objects.filter(client__in=clients)
-        # tasks = organizer_models.Task.get_by_request(self.request, projects=projects)
+        dashboard = organizer_models.Dashboard.get_by_request(self.request)
 
         context['clients'] = clients
-        # context['projects'] = projects.all()
-        # context['tasks'] = tasks.all()
+        context['dashboard'] = dashboard
 
         return context
 dashboard = Dashboard.as_view()
