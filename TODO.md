@@ -1,15 +1,19 @@
-Views
+Functionality
 =====
 - Dashboard
     - Async
-        - Get Client List
-        - Get Project List
-            - client id
         - Edit Task Notes (easier to get to than moving to edit-task page)
         - Complete Task
-- Project Details
-- Client Details
-- Project Edit
-- Client Edit
+    - Modularized
+        - More panels
+        - User able to setup and arrange panels
 - Task Search
-- Login
+
+Code
+====
+- Dashboard modular views cleanup
+
+Pretty
+======
+- Login is ugly
+- Project, Client, and Task CRUD forms are ugly
