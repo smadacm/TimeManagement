@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from Organizer import dashboard_panels
+
 # Create your models here.
 
 class ProjectPriority(models.Model):
@@ -104,3 +106,62 @@ class Task(models.Model):
     def set_defaults(self):
         self.severity = self.default_severity
         self.project = self.default_project
+
+class Dashboard(models.Model):
+    user = models.ForeignKey(User, blank=True, unique=True)
+
+    @classmethod
+    def get_or_create_by_request(cls, request):
+        user = request.user
+        dashboard = cls.objects.filter(user=user)
+        if len(dashboard) == 0:
+            dashboard = cls()
+            dashboard.user = user
+            dashboard.save()
+        else:
+            dashboard = dashboard.first()
+
+        return dashboard
+
+    @classmethod
+    def get_by_request(cls, request):
+        user = request.user
+        dashboard = cls.objects.filter(user=user)
+        if len(dashboard) == 0:
+            dashboard = cls.objects.filter(user='')
+        dashboard = dashboard.first()
+        dashboard.set_request(request)
+        return dashboard
+
+    def set_request(self, request):
+        self.request = request
+
+    def render_panels(self):
+        results = []
+        for panel in self.dashboardpanel_set.all():
+            results.append(panel.render())
+        return '\n'.join(results)
+
+class DashboardPanel(models.Model):
+    PANEL_TYPES = (
+        ('CreateTaskPanel', 'Create Task'),
+        ('AllTasksPanel', 'All Tasks'),
+        ('DueTodayPanel', 'Due Today'),
+        ('DueThisWeekPanel', 'Due This Week'),
+    )
+    dashboard = models.ForeignKey(Dashboard)
+    type = models.CharField('Panel Type', choices=PANEL_TYPES)
+    sort_order = models.IntegerField('Sort Order', default=99)
+
+    def init(self, request, **params):
+        self.request = request
+        self.params = params
+
+    @property
+    def panel(self):
+        if not hasattr(self, 'panel'):
+            self.panel = getattr(dashboard_panels, self.type)(self.request, **self.params)
+        return self.panel
+
+    def render(self):
+        return self.panel.render()
