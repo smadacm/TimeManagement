@@ -1,27 +1,40 @@
 {% extends "layouts/content.html" %}
 
+{% block title %}Login{% endblock %}
+
 {% block content %}
-    {% if info %}
-        <fieldset class="info">
-            <legend>Message</legend>
-            {{ info }}
-        </fieldset>
-    {% endif %}
-    {% if error %}
-        <fieldset class="error">
-            <legend>Error</legend>
-            {{ error }}
-        </fieldset>
-    {% endif %}
-    <form action="{% url "overhead.login_action" %}" method="post">
-        {% csrf_token %}
-        {% if redirect %}
-            <input type="hidden" name="redirect" value="{{ redirect }}" />
-        {% endif %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" />
-        <label for="password">Password:</label>
-        <input type="password" name="password" id="password" />
-        <input type="submit" value="Log In" />
-    </form>
+    <div class="row col-sm-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h1 style="margin:5px 0; font-size:25px;">Login</h1></div>
+            <div class="panel-body">
+                {% if info %}
+                    <fieldset class="info">
+                        <legend>Message</legend>
+                        {{ info }}
+                    </fieldset>
+                {% endif %}
+                {% if error %}
+                    <fieldset class="error">
+                        <legend>Error</legend>
+                        {{ error }}
+                    </fieldset>
+                {% endif %}
+                <form action="{% url "overhead.login_action" %}" method="post">
+                    {% csrf_token %}
+                    {% if redirect %}
+                        <input type="hidden" name="redirect" value="{{ redirect }}" />
+                    {% endif %}
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" name="username" id="username" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" name="password" id="password" class="form-control" />
+                    </div>
+                    <input type="submit" value="Log In" class="btn btn-primary" />
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
