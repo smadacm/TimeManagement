@@ -4,7 +4,6 @@ from django.template import RequestContext
 from django.views import generic as generic_views
 
 from Organizer import models as organizer_models
-
 from Overhead import util
 
 class Dashboard(util.ForcedAuthenticationMixin, generic_views.TemplateView):

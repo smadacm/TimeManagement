@@ -1,9 +1,9 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.loader import get_template
 from django.template import RequestContext
-
-# Create your models here.
 
 class ProjectPriority(models.Model):
     name = models.CharField('Name', max_length=255)
@@ -180,6 +180,15 @@ class DashboardPanel(models.Model):
             template = get_template(self.template_name)
             return template.render(RequestContext(self.request, self.data))
 
+    class UnclassifiedPanelAbstract(DashboardPanelAbstract):
+        template_filename = 'unclassified_tasks.html'
+        title = 'Sorted'
+
+        def get_base_data(self):
+            data = self.params
+            data['title'] = self.title
+            return data
+
     class CreateTaskPanel(DashboardPanelAbstract):
         template_filename = 'create_task.html'
 
@@ -194,11 +203,27 @@ class DashboardPanel(models.Model):
                 data['clients'] = clients
             return data
 
-    class DueTodayPanel(DashboardPanelAbstract):
-        template_filename = 'unclassified_tasks.html'
+    class DueTodayPanel(UnclassifiedPanelAbstract):
+        title = 'Due Today'
 
-    class DueThisWeekPanel(DashboardPanelAbstract):
-        template_filename = 'unclassified_tasks.html'
+        @property
+        def data(self):
+            data = self.get_base_data()
+            data['tasks'] = Task.objects.filter(due=datetime.date.today(), user=self.request.user).all()
+            return data
+
+    class DueThisWeekPanel(UnclassifiedPanelAbstract):
+        title = 'Due This Week'
+
+        @property
+        def data(self):
+            today = datetime.date.today()
+            week_start = today - datetime.timedelta(days=today.weekday())
+            week_end = week_start + datetime.timedelta(days=6)
+
+            data = self.get_base_data()
+            data['tasks'] = Task.objects.filter(due__lte=week_end, due__gte=week_start, user=self.request.user).all()
+            return data
 
     def init(self, request, **params):
         self.request = request
