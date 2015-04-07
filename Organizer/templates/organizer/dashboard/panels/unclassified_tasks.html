@@ -7,8 +7,14 @@
         <div class="panel-body">
             {% for task in tasks %}
                 <div class="row {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-                    <div class="col-sm-10">
-                        <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a> ({{ task.project.client }} -- {{ task.project }})
+                    <div class="col-sm-9">
+                        <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+                    </div>
+                    <div class="col-sm-1">
+                        {{ task.project.client }}
+                    </div>
+                    <div class="col-sm-1">
+                        {{ task.project }}
                     </div>
                     <div class="col-sm-1">
                         <a href="{% url "tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
