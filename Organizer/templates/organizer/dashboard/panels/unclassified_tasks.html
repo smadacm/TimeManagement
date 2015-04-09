@@ -1,26 +1,30 @@
 {% load static %}
 <div class="row col-sm-12">
-    <div class="panel panel-primary">
+    <div class="panel panel-{{ panel_type }}">
         <div class="panel-heading">
             <h3 class="panel-title">{{ title }}</h3>
         </div>
         <div class="panel-body">
-            {% for task in tasks %}
-                <div class="row {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-                    <div class="col-sm-9">
-                        <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+            {% if tasks %}
+                {% for task in tasks %}
+                    <div class="row {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+                        <div class="col-sm-9">
+                            <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+                        </div>
+                        <div class="col-sm-1">
+                            {{ task.project.client }}
+                        </div>
+                        <div class="col-sm-1">
+                            {{ task.project }}
+                        </div>
+                        <div class="col-sm-1">
+                            <a href="{% url "tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
+                        </div>
                     </div>
-                    <div class="col-sm-1">
-                        {{ task.project.client }}
-                    </div>
-                    <div class="col-sm-1">
-                        {{ task.project }}
-                    </div>
-                    <div class="col-sm-1">
-                        <a href="{% url "tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
-                    </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            {% elif display_if_empty %}
+                {{ empty_display_text }}
+            {% endif %}
         </div>
     </div>
 </div>
