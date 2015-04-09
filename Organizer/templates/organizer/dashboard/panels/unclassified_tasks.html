@@ -1,34 +1,36 @@
 {% load static %}
-<div class="row col-sm-12">
-    <div class="panel panel-{{ panel_type }}">
-        <div class="panel-heading">
-            <h3 class="panel-title">{{ title }}</h3>
-        </div>
-        <div class="panel-body">
-            {% if tasks %}
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Client</th>
-                            <th>Project</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {% for task in tasks %}
-                        <tr>
-                            <td><a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a></td>
-                            <td>{{ task.project.client }}</td>
-                            <td>{{ task.project }}</td>
-                            <td><a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a></td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            {% elif display_if_empty %}
-                {{ empty_display_text }}
-            {% endif %}
+{% if tasks or display_if_empty %}
+    <div class="row col-sm-12">
+        <div class="panel panel-{{ panel_type }}">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ title }}</h3>
+            </div>
+            <div class="panel-body">
+                {% if tasks %}
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Client</th>
+                                <th>Project</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}
+                            <tr>
+                                <td><a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a></td>
+                                <td>{{ task.project.client }}</td>
+                                <td>{{ task.project }}</td>
+                                <td><a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    {{ empty_display_text }}
+                {% endif %}
+            </div>
         </div>
     </div>
-</div>
+{% endif %}

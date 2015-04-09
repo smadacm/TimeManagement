@@ -77,7 +77,7 @@ class TimeBasedPanel(UnclassifiedPanelAbstract):
 class PastDuePanel(TimeBasedPanel):
     title = 'Past Due'
     panel_type = 'danger'
-    display_if_empty = True
+    display_if_empty = False
 
     def get_time_filters(self):
         filters = {
