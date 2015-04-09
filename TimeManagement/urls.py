@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^$', RedirectView.as_view(pattern_name='dashboard', permanent=False), name='home'),
     url(r'^organizer/', include('Organizer.urls')),
     url(r'^overhead/', include('Overhead.urls')),
+    url(r'^grappelli/', include('grappelli.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
