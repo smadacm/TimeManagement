@@ -91,3 +91,14 @@ class DashboardAsyncPutTask(util.ForcedAuthenticationMixin, JSONResponseView):
         clients = organizer_models.Project.objects.filter(client__pk=kwargs['client'])
         clients_d = dict([(client.name, client.id) for client in clients])
         return clients_d
+
+class DashboardDeleteTaskView(generic_views.RedirectView):
+    permanent = False
+    query_string = False
+    pattern_name = 'dashboard'
+
+    def get(self, request, pk, *args, **kwargs):
+        task = organizer_models.Task.objects.filter(pk=pk)
+        if len(task):
+            task.delete()
+        return super(DashboardDeleteTaskView, self).get(request, *args, **kwargs)

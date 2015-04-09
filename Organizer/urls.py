@@ -19,6 +19,7 @@ urlpatterns = patterns('Organizer.views',
                        url(r'^tasks/delete/(?P<pk>\d*)/?$', organizer_views.TaskDelete.as_view(), name='tasks.delete'),
 
                        url(r'^dashboard/$', organizer_views.Dashboard.as_view(), name='dashboard'),
+                       url(r'^dashboard/tasks/delete/(?P<pk>\d+)$', organizer_views.DashboardDeleteTaskView.as_view(), name='dashboard.tasks.delete'),
 
                        url(r'^async/clients/get$', organizer_views.DashboardAsyncGetClients.as_view(), name='async.clients.get'),
                        url(r'^async/projects/get/(?P<client>\d+)$', organizer_views.DashboardAsyncGetProjects.as_view(), name='async.projects.get'),
