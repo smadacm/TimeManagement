@@ -29,6 +29,7 @@
 
         <script src="{% static "/static/third_party/bootstrap/js/bootstrap.min.js" %}"></script>
         <!--<script src="{% static "/static/third_party/bootstrap/js/docs.min.js" %}"></script>-->
+        {{ request.aggregator.rendered_js }}
         {% block js %}{% endblock %}
     </body>
 </html>

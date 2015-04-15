@@ -24,7 +24,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['time.cadams.kadrosolutions.net',]
 
 
 # Application definition
@@ -50,6 +50,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Overhead.middleware.UnAuthorized',
+    'Overhead.middleware.js_css_aggregator.AggregatorMiddleware',
+    'Theme.middleware.ThemePrep',
 )
 
 ROOT_URLCONF = 'TimeManagement.urls'
