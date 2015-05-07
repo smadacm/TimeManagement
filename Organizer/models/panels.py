@@ -81,7 +81,7 @@ class PastDuePanel(TimeBasedPanel):
 
     def get_time_filters(self):
         filters = {
-            'due__lte': datetime.date.today(),
+            'due__lt': datetime.date.today(),
             }
         return filters
 
