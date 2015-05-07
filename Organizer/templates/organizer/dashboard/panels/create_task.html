@@ -24,6 +24,8 @@
                     <input type="date" name="due" id="task-add-form-due" class="form-control" />
                 </div>
                 <input type="submit" value="Create Task" class="btn btn-primary" id="task-add-form-submit" />
+                <input type="button" value="Due Today" class="btn btn-primary" id="task-add-form-submit" onclick="taskBuilder.setDueSoon()" />
+                <input type="button" value="Due Tomorrow" class="btn btn-primary" id="task-add-form-submit" onclick="taskBuilder.setDueSoon(1)" />
             </form>
         </div>
     </div>

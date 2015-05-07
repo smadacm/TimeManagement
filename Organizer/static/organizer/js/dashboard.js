@@ -75,6 +75,20 @@ $(document).ready(function(){
             targetElem.hide(400);
         };
 
+        var setDueSoon = function(futureDays){
+            if(futureDays == undefined){
+                futureDays = 0;
+            }
+            var theDate = new Date();
+            theDate.setDate(theDate.getDate() + futureDays);
+
+            var day = ("0" + theDate.getDate()).slice(-2);
+            var month = ("0" + (theDate.getMonth() + 1)).slice(-2);
+            var today = theDate.getFullYear()+"-"+(month)+"-"+(day) ;
+
+            dueInput.val(today);
+        }
+
 //        submit.on('click', submitTask);
         clientsSelect.on('change', clientChange);
         populateClients();
@@ -83,6 +97,7 @@ $(document).ready(function(){
             'showForm':showForm,
             'clientChange':clientChange,
             'submitTask':submitTask,
+            'setDueSoon':setDueSoon,
         };
     }();
 })
