@@ -27,7 +27,7 @@
                             <div class="col-sm-1">
                                 <a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
                             </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
