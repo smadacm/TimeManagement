@@ -20,7 +20,7 @@
                                 <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
                             </div>
                             <div class="col-sm-1">
-                                <a href="{% url "tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
+                                <a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
                             </div>
                         </div>
                     {% endfor %}
