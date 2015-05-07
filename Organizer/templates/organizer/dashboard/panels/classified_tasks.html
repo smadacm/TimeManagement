@@ -6,28 +6,32 @@
                 <h3 class="panel-title">{{ client.name }}</h3>
             </div>
         </div>
-    </div>
-    <div class="row">
-        {% for project in client.filtered_projects %}
-            <div class="col-sm-4">
-                <div class="panel panel-secondary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">{{ project.name }}</h3>
-                    </div>
-                    <div class="panel-body">
-                        {% for task in project.filtered_tasks %}
-                            <div class="row">
-                                <div class="col-sm-10 {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
-                                    <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+        <div class="row">
+            {% for project in client.filtered_projects %}
+                <div class="col-sm-4">
+                    <div class="panel panel-secondary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ project.name }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% for task in project.filtered_tasks %}
+                                <div class="row">
+                                    <div class="col-sm-10 {% if forloop.counter|divisibleby:2 %}even{% else %}odd{% endif %}">
+                                        <a href="{% url "tasks.edit" pk=task.pk %}">{{ task.title }}</a>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
+                                    </div>
                                 </div>
-                                <div class="col-sm-1">
-                                    <a href="{% url "dashboard.tasks.delete" pk=task.pk %}"><img src="{% static "images/cancel_15.png" %}" /></a>
-                                </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+                {% if forloop.counter != 0 and not forloop.last and forloop.counter|divisibleby:3 %}
+                    </div>
+                    <div class="row">
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 {% endfor %}
